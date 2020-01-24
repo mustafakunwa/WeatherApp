@@ -5,15 +5,15 @@ const forecast = require('./utils/forecast');
 const address = process.argv[2];
 
 if (address) {
-    geocode(address, (error, data) => {
+    geocode(address, (error, { latitude, longitude, location }) => {
         if (error)
             return console.log('Error:' + error);
 
-        forecast(data.latitude, data.longitude, (error, forecastData) => {
+        forecast(latitude, longitude, (error, { temperature, precipProbability }) => {
             if (error)
                 return console.log('Error:', error)
-            console.log(data.location);
-            console.log('Data :', 'It is currently ' + forecastData.temperature + ' degrees out.There is ' + forecastData.precipProbability + '% chance of rain')
+            console.log(location);
+            console.log('Data :', 'It is currently ' + temperature + ' degrees out.There is ' + precipProbability + '% chance of rain')
         })
     })
 }
